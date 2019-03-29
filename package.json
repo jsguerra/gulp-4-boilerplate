@@ -1,7 +1,7 @@
 {
   "name": "gulp-updated",
   "version": "1.0.0",
-  "description": "> This version is an update from Gulp 3 to version 4 with new syntax approach.",
+  "description": "This version is an update from Gulp 3 to version 4 with new syntax approach.",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,7 +11,7 @@
     "url": "git+https://github.com/jsguerra/gulp-updated.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "Jose Guerra",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/jsguerra/gulp-updated/issues"
