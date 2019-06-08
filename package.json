@@ -1,7 +1,7 @@
 {
   "name": "gulp-updated",
   "version": "1.0.0",
-  "description": "This version is an update from Gulp 3 to version 4 with new syntax approach.",
+  "description": "A Gulp 4 setup",
   "main": "gulpfile.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -16,5 +16,16 @@
   "bugs": {
     "url": "https://github.com/jsguerra/gulp-updated/issues"
   },
-  "homepage": "https://github.com/jsguerra/gulp-updated#readme"
+  "homepage": "https://github.com/jsguerra/gulp-updated#readme",
+  "devDependencies": {
+    "autoprefixer": "^9.6.0",
+    "cssnano": "^4.1.10",
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-postcss": "^8.0.0",
+    "gulp-replace": "^1.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
+    "gulp-uglify": "^3.0.2"
+  }
 }
