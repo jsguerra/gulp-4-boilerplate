@@ -12,7 +12,9 @@ const uglify = require('gulp-uglify');
 // File path variables
 const files = {
   scssPath: 'app/scss/**/*.scss',
-  jsPath: 'app/js/**/*.js'
+  cssDest: 'dist/css/',
+  jsPath: 'app/js/**/*.js',
+  jsDest: 'dist/js/'
 }
 
 // Sass task
@@ -22,7 +24,7 @@ function scssTask() {
     .pipe(sass())
     .pipe(postcss([ autoprefixer(), cssnano() ]))
     .pipe(sourcemaps.write('.'))
-    .pipe(dest('dist')
+    .pipe(dest(files.cssDest)
   );
 }
 
@@ -31,7 +33,7 @@ function jsTask() {
   return src(files.jsPath)
     .pipe(concat('all.js'))
     .pipe(uglify())
-    .pipe(dest('dist')
+    .pipe(dest(files.jsDest)
   );
 }
 
