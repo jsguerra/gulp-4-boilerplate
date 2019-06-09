@@ -16,11 +16,43 @@ const files = {
 }
 
 // Sass task
+function scssTask() {
+  return src(files.scssPath)
+    .pipe(sourcemaps.init())
+    .pipe(sass())
+    .pipe(postcss([ autoprefixer(), cssnano() ]))
+    .pipe(sourcemaps.write('.'))
+    .pipe(dest('dist')
+  );
+}
 
 // JS task
+function jsTask() {
+  return src(files.jsPath)
+    .pipe(concat('all.js'))
+    .pipe(uglify())
+    .pipe(dest('dist')
+  );
+}
 
 // Cachebusting task
+const cbString = new Date().getTime();
+function cacheBustTask() {
+  return src(['index.html'])
+    .pipe(replace(/cd=\d+/g, 'cb=' + cbString))
+    .pipe(dest('.')
+  );
+}
 
 // Watch task
+function watchTask() {
+  watch([files.scssPath, files.jsPath],
+    parallel(scssTask, jsTask));
+}
 
 // Default task
+exports.default = series(
+  parallel(scssTask, jsTask),
+  cacheBustTask,
+  watchTask
+);
