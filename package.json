@@ -1,22 +1,19 @@
 {
-  "name": "gulp-updated",
+  "name": "gulp-4-boilerplate",
   "version": "1.0.0",
-  "description": "A Gulp 4 setup",
+  "description": "Gulp 4 starter biolerplate",
   "main": "gulpfile.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jsguerra/gulp-updated.git"
+    "url": "git+https://github.com/jsguerra/gulp-4-boilerplate.git"
   },
   "keywords": [],
   "author": "Jose Guerra",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/jsguerra/gulp-updated/issues"
+    "url": "https://github.com/jsguerra/gulp-4-boilerplate/issues"
   },
-  "homepage": "https://github.com/jsguerra/gulp-updated#readme",
+  "homepage": "https://github.com/jsguerra/gulp-4-boilerplate#readme",
   "devDependencies": {
     "autoprefixer": "^9.6.0",
     "cssnano": "^4.1.10",
