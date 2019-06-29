@@ -1,38 +1,48 @@
 // Initialize modules
-const { src, dest, watch, series, parallel } = require('gulp');
-const autoprefixer = require('autoprefixer');
-const cssnano = require('cssnano');
-const concat = require('gulp-concat');
-const postcss = require('gulp-postcss');
-const replace = require('gulp-replace');
-const sass = require('gulp-sass');
-const sourcemaps = require('gulp-sourcemaps');
-const uglify = require('gulp-uglify');
+const { src, dest, watch, series, parallel } = require('gulp'),
+      sass = require('gulp-sass'),
+      cssnano = require('cssnano'),
+      rename = require('gulp-rename'),
+      uglify = require('gulp-uglify'),
+      concat = require('gulp-concat'),
+      replace = require('gulp-replace'),
+      postcss = require('gulp-postcss'),
+      autoprefixer = require('autoprefixer'),
+      sourcemaps = require('gulp-sourcemaps'),
+      browserSync = require('browser-sync').create();
 
 // File path variables
 const files = {
-  scssPath: 'app/scss/**/*.scss',
+  source: 'src',
+  dist: 'dist',
+  scssSrc: 'src/sass/**/*.scss',
+  jsSrc: 'src/js/**/*.js',
   cssDest: 'dist/css/',
-  jsPath: 'app/js/**/*.js',
   jsDest: 'dist/js/'
 }
 
 // Sass task
 function scssTask() {
-  return src(files.scssPath)
+  return src(files.scssSrc)
     .pipe(sourcemaps.init())
-    .pipe(sass())
-    .pipe(postcss([ autoprefixer(), cssnano() ]))
-    .pipe(sourcemaps.write('.'))
+    .pipe(sass({
+      outputStyle: 'expanded',
+      indentType: 'tab',
+      indentWidth: '1'
+    })
+    .on('error', sass.logError))
+    .pipe(postcss([ autoprefixer('last 2 versions', '> 1%'), cssnano() ]))
+    .pipe(sourcemaps.write(files.scssSrc + 'maps'))
     .pipe(dest(files.cssDest)
   );
 }
 
 // JS task
 function jsTask() {
-  return src(files.jsPath)
-    .pipe(concat('all.js'))
+  return src(files.jsSrc)
+    .pipe(concat('main.js'))
     .pipe(uglify())
+    .pipe(rename({suffix: '.min'}))
     .pipe(dest(files.jsDest)
   );
 }
@@ -40,15 +50,21 @@ function jsTask() {
 // Cachebusting task
 const cbString = new Date().getTime();
 function cacheBustTask() {
-  return src(['index.html'])
+  return src(['src/index.html'])
     .pipe(replace(/cd=\d+/g, 'cb=' + cbString))
-    .pipe(dest('.')
+    .pipe(dest(dist)
   );
 }
 
 // Watch task
 function watchTask() {
-  watch([files.scssPath, files.jsPath],
+  browserSync.init({
+    server: {
+      baseDir: dist
+    }
+  });
+
+  watch([files.scssSrc, files.jsSrc],
     parallel(scssTask, jsTask));
 }
 
