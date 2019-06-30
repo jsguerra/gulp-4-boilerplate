@@ -62,15 +62,6 @@ function jsTask() {
   );
 }
 
-// Cachebusting task
-const cbString = new Date().getTime();
-function cacheBustTask() {
-  return src(['app/index.html'])
-    .pipe(replace(/cd=\d+/g, 'cb=' + cbString))
-    .pipe(dest(filePaths.destFolder)
-  );
-}
-
 // Watch task
 function watchTask() {
   browserSync.init({
@@ -86,6 +77,5 @@ function watchTask() {
 // Default task
 exports.default = series(
   parallel(scssTask, jsTask),
-  cacheBustTask,
   watchTask
 );
