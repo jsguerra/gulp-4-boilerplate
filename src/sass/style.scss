@@ -4,9 +4,12 @@
   'config/config-site',
   'config/config-type';
 
-// 02. Utility (functions and mixins)
+// 02. Utility (resets, functions and mixins)
 // ======================================================================
-@import 'utility/mixins';
+@import
+  'utility/functions',
+  'utility/mixins',
+  'utility/bootstrap-reboot';
 
 
 // 03. html (top level settings: html, body, global settings)

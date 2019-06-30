@@ -1,3 +1,33 @@
+// Global
+// ================================
+
+// Apply a natural box layout model to all elements:
+// paulirish.com/2012/box-sizing-border-box-ftw
+
+* {
+  box-sizing: border-box;
+}
+
+// Separate universal psuedo selectors for performance
+// Remove pointer-events to prevent overlays from being clickable
+
+*:before,
+*:after {
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+html {
+  // height: 100%;
+  // font-family: $font-family-1;
+  // background: $m1;
+  -webkit-font-smoothing: antialiased; // all webkit
+  -moz-osx-font-smoothing: grayscale; // firefox
+}
+
 body {
-  background-color: $color;
+  // height: 100%;
+  font-size: $body-font-size; 
+  line-height: $body-line-height;
+  color: $color;
 }
