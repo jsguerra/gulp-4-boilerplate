@@ -1,6 +1,8 @@
 // 01. Config (Variables: site, type, constants)
 // ======================================================================
-@import 'config/variables';
+@import
+  'config/config-site',
+  'config/config-type';
 
 // 02. Utility (functions and mixins)
 // ======================================================================
