@@ -1,5 +1,5 @@
-# Updated Version of Gulp
+# Gulp 4 Boilerplate
 
-> Gulp version 4 with new syntax approach.
+> A simple Gulp 4 boilerplate
 
-This is a build in progress. Updates coming soon.
+This is a build in progress.
