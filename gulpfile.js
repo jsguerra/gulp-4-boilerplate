@@ -1,29 +1,38 @@
-// Initialize modules
-const { src, dest, watch, series, parallel } = require('gulp'),
-      sass = require('gulp-sass'),
+// Load Gulp
+const { src, dest, watch, series, parallel } = require('gulp');
+
+// CSS related plugins
+const sass = require('gulp-sass'),
       cssnano = require('cssnano'),
-      rename = require('gulp-rename'),
-      uglify = require('gulp-uglify'),
-      concat = require('gulp-concat'),
-      replace = require('gulp-replace'),
       postcss = require('gulp-postcss'),
       autoprefixer = require('autoprefixer'),
-      sourcemaps = require('gulp-sourcemaps'),
-      browserSync = require('browser-sync').create();
+      sourcemaps = require('gulp-sourcemaps');
 
-// File path variables
-const files = {
-  source: 'src',
-  dist: 'dist',
-  scssSrc: 'src/sass/**/*.scss',
-  jsSrc: 'src/js/**/*.js',
-  cssDest: 'dist/css/',
-  jsDest: 'dist/js/'
+// JS related plugins
+const uglify = require('gulp-uglify');
+
+// Utility plugins
+const rename = require('gulp-rename'),
+      concat = require('gulp-concat'),
+      replace = require('gulp-replace');
+
+// Browers related plugins
+const browserSync = require('browser-sync').create();
+
+// File paths
+const filePaths = {
+  srcSass: 'src/sass',
+  srcCss: 'src/css',
+  srcJs: 'src/js',
+  destCss: 'app/css',
+  destJs: 'app/js',
+  destFolder: 'app'
 }
 
-// Sass task
+
+// Sass task: compiles the style.scss file into style.css
 function scssTask() {
-  return src(files.scssSrc)
+  return src(filePaths.srcSass + '/sass/**/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass({
       outputStyle: 'expanded',
@@ -31,28 +40,35 @@ function scssTask() {
       indentWidth: '1'
     })
     .on('error', sass.logError))
-    .pipe(postcss([ autoprefixer('last 2 versions', '> 1%'), cssnano() ]))
-    .pipe(sourcemaps.write(files.scssSrc + 'maps'))
-    .pipe(dest(files.cssDest)
+    .pipe(postcss([ autoprefixer('last 2 versions', '> 1%') ]))
+    .pipe(dest(filePaths.srcCss))
+    .pipe(cssnano())
+    .pipe(rename({ suffix: '.min' }))
+    .pipe(sourcemaps.write())
+    .pipe(dest(filePaths.destCss))
+    .pipe(browserSync.stream()
   );
 }
 
-// JS task
+// JS task: 
 function jsTask() {
-  return src(files.jsSrc)
+  return src(filePaths.srcJs + '/**/*.js')
+    .pipe(sourcemaps.init())
     .pipe(concat('main.js'))
     .pipe(uglify())
     .pipe(rename({suffix: '.min'}))
-    .pipe(dest(files.jsDest)
+    .pipe(sourcemaps.write())
+    .pipe(dest(filePaths.destJs))
+    .pipe(browserSync.stream()
   );
 }
 
 // Cachebusting task
 const cbString = new Date().getTime();
 function cacheBustTask() {
-  return src(['src/index.html'])
+  return src(['app/index.html'])
     .pipe(replace(/cd=\d+/g, 'cb=' + cbString))
-    .pipe(dest(dist)
+    .pipe(dest(filePaths.destFolder)
   );
 }
 
@@ -60,12 +76,12 @@ function cacheBustTask() {
 function watchTask() {
   browserSync.init({
     server: {
-      baseDir: dist
+      baseDir: 'app'
     }
   });
 
-  watch([files.scssSrc, files.jsSrc],
-    parallel(scssTask, jsTask));
+  watch([filePaths.srcSass + '/**/*.scss', filePaths.srcJs + '/**/*.js'], parallel(scssTask, jsTask));
+  watch(filePaths.destFolder + '**/*').on('change', browserSync.reload);
 }
 
 // Default task
