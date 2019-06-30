@@ -1,0 +1,40 @@
+// ================================
+// Calculations
+// ================================
+
+// Using short names for functions that will be used often:
+// thesassway.com/advanced/pure-sass-functions
+
+// All shorthand calculations will be indicated with a beginning "c"
+// Examples:
+// Calculate rem, "cre"
+
+
+// Calculate rem sizes
+// ================================
+
+@function cre($target, $context: 16) {
+  @return calc-rem-size($target, $context)
+}
+
+@function calc-rem-size($target, $context: 16) {
+  $strip-target: su($target);
+  $strip-context: su($context);
+  @return ($strip-target / $strip-context) * 1rem;
+}
+
+
+// ================================
+// Strip Units
+// ================================
+
+// Strip the units from a value:
+// css-tricks.com/snippets/css/less-mixin-for-rem-font-sizing
+
+@function su($num) {
+  @return strip-unit($num);
+}
+
+@function strip-unit($num) {
+  @return $num / ($num * 0 + 1);
+}
