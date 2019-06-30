@@ -32,7 +32,7 @@ const filePaths = {
 
 // Sass task: compiles the style.scss file into style.css
 function scssTask() {
-  return src(filePaths.srcSass + '/sass/**/*.scss')
+  return src(filePaths.srcSass + '/**/*.scss')
     .pipe(sourcemaps.init())
     .pipe(sass({
       outputStyle: 'expanded',
@@ -40,9 +40,8 @@ function scssTask() {
       indentWidth: '1'
     })
     .on('error', sass.logError))
-    .pipe(postcss([ autoprefixer('last 2 versions', '> 1%') ]))
+    .pipe(postcss([ autoprefixer('last 2 versions', '> 1%'), cssnano() ]))
     .pipe(dest(filePaths.srcCss))
-    .pipe(cssnano())
     .pipe(rename({ suffix: '.min' }))
     .pipe(sourcemaps.write())
     .pipe(dest(filePaths.destCss))
