@@ -1,3 +1,35 @@
-body {
-  background-color: white;
-}
+// 01. Config (Variables: site, type, constants)
+// ======================================================================
+@import 'config/variables';
+
+// 02. Utility (functions and mixins)
+// ======================================================================
+@import 'utility/mixins';
+
+
+// 03. html (top level settings: html, body, global settings)
+// ======================================================================
+@import 'html/html';
+
+
+// 04. Structure (header, navigtation, footer, aside, layout)
+// ======================================================================
+@import
+  'structure/header',
+  'structure/navigation',
+  'structure/footer';
+
+
+// 05. Modules (reusable components: accordions, tabs, forms, etc)
+// ======================================================================
+@import 'modules/table';
+
+
+// 06. Pages (page and posts specifics: content, articles, etc)
+// ======================================================================
+@import 'pages/page';
+
+
+// 07. Enhancements (hero treatments, sliders, etc)
+// ======================================================================
+@import 'enhancements/hero';
